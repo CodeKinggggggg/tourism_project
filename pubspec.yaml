@@ -17,6 +17,7 @@ dependencies:
   freezed_annotation: ^2.2.0
   json_annotation: ^4.8.1
   dio: ^5.2.1+1
+  flutter_launcher_icons: ^0.13.1
   
 
 dev_dependencies:
@@ -29,4 +30,27 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/
+    - assets/app_logo/
+        
+  fonts:
+    # 스포카 한 산스
+    - family: SpoqaHanSansNeo
+      fonts:
+        - asset: assets/fonts/SpoqaHanSansNeo-Regular.otf
+          weight: 400
+        - asset: assets/fonts/SpoqaHanSansNeo-Medium.otf
+          weight: 500
+        - asset: assets/fonts/SpoqaHanSansNeo-Bold.otf
+          weight: 600
 
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  remove_alpha_ios: true
+  image_path_ios : "assets/app_logo/app_logo.png"
+  image_path_android: "assets/app_logo/app_logo.png"
+  adaptive_icon_background: "assets/app_logo/icon_background.png"
+  adaptive_icon_foreground: "assets/app_logo/icon_foreground.png"
