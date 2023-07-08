@@ -12,13 +12,12 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  http: ^1.1.0
   flutter_riverpod: ^2.3.6
   freezed_annotation: ^2.2.0
   json_annotation: ^4.8.1
   dio: ^5.2.1+1
   flutter_launcher_icons: ^0.13.1
-  
+  flutter_dotenv: ^5.0.2
 
 dev_dependencies:
   flutter_test:
@@ -33,6 +32,8 @@ flutter:
   assets:
     - assets/
     - assets/app_logo/
+    - assets/config/
+
         
   fonts:
     # 스포카 한 산스
