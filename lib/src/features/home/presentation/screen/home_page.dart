@@ -54,7 +54,14 @@ class _HomePageState extends ConsumerState<HomePage> {
                 },
               ),
             ),
-            Text('1/167'),
+            const SizedBox(height: 13),
+            Text(
+              '-  ${pageNo + 1} / ${(galleryList.length / 6).ceil()}  -',
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
           ],
         ),
       ),
