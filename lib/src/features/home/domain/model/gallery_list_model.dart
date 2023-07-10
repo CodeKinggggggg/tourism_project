@@ -8,8 +8,6 @@ class GalleryListModel with _$GalleryListModel {
   const factory GalleryListModel({
     // id
     required String galContentId,
-    // 내용 타입에 대한 id
-    required String galContentTypeId,
     // 사진 제목
     required String galTitle,
     // 사진 이미지 url
@@ -20,13 +18,6 @@ class GalleryListModel with _$GalleryListModel {
     required String galPhotographyLocation,
     // 사진가
     required String galPhotographer,
-    // 검색 키워드
-    required String galSearchKeyword,
-    // 데이터 생성일자
-    // ex) "20230707144414"
-    required String galCreatedtime,
-    // 데이터 수정일자
-    required String galModifiedtime,
   }) = _GalleryListModel;
 
   factory GalleryListModel.fromJson(Map<String, dynamic> json) =>

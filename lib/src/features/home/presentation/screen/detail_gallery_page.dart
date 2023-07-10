@@ -1,27 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tourism_http/src/common/constants/app_color.dart';
 import 'package:tourism_http/src/common/widget/icon_button/custom_back_button.dart';
 import 'package:tourism_http/src/common/widget/text_button/custom_fill_text_button.dart';
 import 'package:tourism_http/src/common/widget/text_button/custom_outline_text_button.dart';
 import 'package:tourism_http/src/features/home/domain/model/gallery_list_model.dart';
 import 'package:tourism_http/src/features/home/presentation/widget/gallery_detail_info_box.dart';
+import 'package:tourism_http/src/features/wish_list/presentation/provider/wish_list_provider.dart';
 
-class DetailGalleryPage extends StatefulWidget {
+class DetailGalleryPage extends ConsumerStatefulWidget {
   final GalleryListModel galleryModel;
   const DetailGalleryPage({super.key, required this.galleryModel});
 
   @override
-  State<DetailGalleryPage> createState() => _DetailGalleryPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _DetailGalleryPageState();
 }
 
-class _DetailGalleryPageState extends State<DetailGalleryPage> {
+class _DetailGalleryPageState extends ConsumerState<DetailGalleryPage> {
   late bool isWishList;
+  late final String id;
 
   @override
   void initState() {
     super.initState();
-    isWishList = false;
+    id = widget.galleryModel.galContentId;
+    isWishList = ref.read(isWishListProvider(id));
   }
 
   @override
@@ -32,19 +37,28 @@ class _DetailGalleryPageState extends State<DetailGalleryPage> {
         actions: [
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: InkWell(
-              child: isWishList
-                  ? const Icon(
+            child: isWishList
+                ? InkWell(
+                    child: const Icon(
                       CupertinoIcons.bookmark_fill,
                       color: PRIMARY_COLOR,
-                    )
-                  : const Icon(CupertinoIcons.bookmark),
-              onTap: () async {
-                setState(() {
-                  isWishList = !isWishList;
-                });
-              },
-            ),
+                    ),
+                    onTap: () async {
+                      ref.read(removeWishListProvider(id));
+                      setState(() {
+                        isWishList = !isWishList;
+                      });
+                    },
+                  )
+                : InkWell(
+                    child: const Icon(CupertinoIcons.bookmark),
+                    onTap: () async {
+                      ref.read(addWishListProvider(widget.galleryModel));
+                      setState(() {
+                        isWishList = !isWishList;
+                      });
+                    },
+                  ),
           ),
         ],
       ),
@@ -78,6 +92,8 @@ class _DetailGalleryPageState extends State<DetailGalleryPage> {
                 h: 55,
                 content: '위시리스트에 저장됨',
                 onTap: () async {
+                  ref.read(removeWishListProvider(id));
+
                   setState(() {
                     isWishList = !isWishList;
                   });
@@ -89,6 +105,7 @@ class _DetailGalleryPageState extends State<DetailGalleryPage> {
                 h: 55,
                 content: '위시리스트에 추가',
                 onPressed: () async {
+                  ref.read(addWishListProvider(widget.galleryModel));
                   setState(() {
                     isWishList = !isWishList;
                   });

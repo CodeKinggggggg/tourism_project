@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:tourism_http/src/features/home/domain/model/gallery_list_model.dart';
 
+// remote datasource 인터페이스
 abstract class GalleryDatasource {
   Future<List<GalleryListModel>> fetchGalleryList();
 }
@@ -13,7 +14,6 @@ class GalleryRemoteDatasource implements GalleryDatasource {
   @override
   Future<List<GalleryListModel>> fetchGalleryList() async {
     try {
-      // API KEY
       final String key = dotenv.env['API_KEY']!;
 
       final response = await _dio.get(
