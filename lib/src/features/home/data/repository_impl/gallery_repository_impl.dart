@@ -8,7 +8,7 @@ class GalleryRepositoryImplement implements GalleryRepository {
   GalleryRepositoryImplement(this.galleryDatasource);
 
   @override
-  Future<List<GalleryListModel>> fetchGalleryList(int pageNo) async {
-    return galleryDatasource.fetchGalleryList(pageNo);
+  Future<List<GalleryListModel>> fetchGalleryList() async {
+    return galleryDatasource.fetchGalleryList();
   }
 }

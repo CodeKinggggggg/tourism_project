@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tourism_http/src/common/widget/loading/circular_loading.dart';
-import 'package:tourism_http/src/features/home/domain/model/gallery_list_model.dart';
 import 'package:tourism_http/src/features/home/presentation/provider/gallery_list_provider.dart';
 import 'package:tourism_http/src/features/home/presentation/widget/home_gallery_gridview.dart';
 
@@ -13,11 +12,12 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
-  int pageNo = 1;
+  int pageNo = 0;
   final itemsPerPage = 6;
+
   @override
   Widget build(BuildContext context) {
-    final asyncGalleryList = ref.watch(galleryListProvider(1));
+    final asyncGalleryList = ref.watch(galleryListProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -30,24 +30,32 @@ class _HomePageState extends ConsumerState<HomePage> {
       body: asyncGalleryList.when(
         error: (e, _) => const SizedBox.shrink(),
         loading: () => const CustomCircularLoading(),
-        data: (galleryList) => PageView.builder(
-          // 한 페이지당 6개의 사진 넣기
-          itemCount: (galleryList.length / 6).ceil(),
-          onPageChanged: (index) => setState(() {
-            pageNo = index;
-          }),
-          itemBuilder: (BuildContext context, int pageIndex) {
-            final startIndex = pageIndex * itemsPerPage;
-            final endIndex = (startIndex + itemsPerPage) > galleryList.length
-                ? galleryList.length
-                : (startIndex + itemsPerPage);
-            final galleryListPerPage =
-                galleryList.sublist(startIndex, endIndex);
-            return HomeGalleryGridView(
-              pageNo: pageNo,
-              galleryList: galleryListPerPage,
-            );
-          },
+        data: (galleryList) => Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.7,
+              child: PageView.builder(
+                itemCount: (galleryList.length / 6).ceil(),
+                onPageChanged: (index) => setState(() {
+                  pageNo = index;
+                }),
+                itemBuilder: (BuildContext context, int pageIndex) {
+                  final startIndex = pageIndex * itemsPerPage;
+                  final endIndex =
+                      (startIndex + itemsPerPage) > galleryList.length
+                          ? galleryList.length
+                          : (startIndex + itemsPerPage);
+                  final galleryListPerPage =
+                      galleryList.sublist(startIndex, endIndex);
+                  return HomeGalleryGridView(
+                    pageNo: pageNo,
+                    galleryList: galleryListPerPage,
+                  );
+                },
+              ),
+            ),
+            Text('1/167'),
+          ],
         ),
       ),
     );
