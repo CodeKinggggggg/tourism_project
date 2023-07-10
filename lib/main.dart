@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tourism_http/src/core/const/app_name.dart';
-import 'package:tourism_http/src/core/splash/splash_page.dart';
-import 'package:tourism_http/src/core/theme/app_theme.dart';
+import 'package:tourism_http/src/common/constants/app_name.dart';
+import 'package:tourism_http/src/common/splash/splash_page.dart';
+import 'package:tourism_http/src/common/theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: 'assets/config/api.env');
 
   runApp(
     const ProviderScope(
