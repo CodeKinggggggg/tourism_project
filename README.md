@@ -1,6 +1,5 @@
 [투어리 - 관광 사진 앱] 
 
-
 1. 아키택처
 - 클린 아키택처 기반으로 구성
 - Presetation Layer, Data Layer, Domain Layer으로 크게 나뉨
